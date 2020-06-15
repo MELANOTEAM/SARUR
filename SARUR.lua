@@ -74,7 +74,7 @@ https.request('http://karax.cf/SARUR/?token='..token..'&id='..SUDO..'&install='.
 print('\n\27[1;34m doneeeeeeee senddddddddddddd :')
 file = io.open("SARUR", "w")  
 file:write([[
-#!/uBK/bin/env bash
+#!/usr/bin/env bash
 cd $HOME/SARUR
 token="]]..database:get(id_server..":token")..[["
 while(true) do
@@ -101,7 +101,7 @@ done
 file:close()  
 file = io.open("BK", "w")  
 file:write([[
-#!/uBK/bin/env bash
+#!/usr/bin/env bash
 cd $HOME/SARUR
 while(true) do
 rm -fr ../.telegram-cli
@@ -794,7 +794,7 @@ if text =='الغاء الحظر' then
 local Name = '['..string.sub(data.first_name_,0, 40)..'](tg://user?id='..id_user..')'
 local Text = '📌┇ المستخدم » '..Name..'\n☑️┇ تم حظره من التواصل '
 sendText(SUDO,Text,msg.id_/2097152/0.5,'md')
-database:BKem(bot_id..'Ban:User_Bot',data.id_)  
+database:srem(bot_id..'Ban:User_Bot',data.id_)  
 return false  
 end 
 
@@ -1024,7 +1024,7 @@ chat_id_ = pv[i], action_ = {  ID = "SendMessageTypingAction", progress_ = 100}
 },function(arg,data) 
 if data.ID and data.ID == "Ok"  then
 else
-database:BKem(bot_id.."User_Bot",pv[i])
+database:srem(bot_id.."User_Bot",pv[i])
 sendok = sendok + 1
 end
 if #pv == i then 
@@ -1057,20 +1057,20 @@ for i = 1, #group do
 tdcli_function({ID='GetChat',chat_id_ = group[i]
 },function(arg,data)
 if data and data.type_ and data.type_.channel_ and data.type_.channel_.status_ and data.type_.channel_.status_.ID == "ChatMemberStatusMember" then
-database:BKem(bot_id..'Chek:Groups',group[i])  
+database:srem(bot_id..'Chek:Groups',group[i])  
 tdcli_function ({ID = "ChangeChatMemberStatus",chat_id_=group[i],user_id_=bot_id,status_={ID = "ChatMemberStatusLeft"},},function(e,g) end, nil) 
 w = w + 1
 end
 if data and data.type_ and data.type_.channel_ and data.type_.channel_.status_ and data.type_.channel_.status_.ID == "ChatMemberStatusLeft" then
-database:BKem(bot_id..'Chek:Groups',group[i])  
+database:srem(bot_id..'Chek:Groups',group[i])  
 q = q + 1
 end
 if data and data.type_ and data.type_.channel_ and data.type_.channel_.status_ and data.type_.channel_.status_.ID == "ChatMemberStatusKicked" then
-database:BKem(bot_id..'Chek:Groups',group[i])  
+database:srem(bot_id..'Chek:Groups',group[i])  
 q = q + 1
 end
 if data and data.code_ and data.code_ == 400 then
-database:BKem(bot_id..'Chek:Groups',group[i])  
+database:srem(bot_id..'Chek:Groups',group[i])  
 w = w + 1
 end
 if #group == i then 
@@ -1162,7 +1162,7 @@ return false
 end
 function start_function(extra, result, success)
 if result.id_ then
-database:BKem(bot_id..'Sudo:User', result.id_)
+database:srem(bot_id..'Sudo:User', result.id_)
 usertext = '\n܁༯┆ههلو حياتي 💕 ܰ ['..result.title_..'](t.me/'..(username or 'SARUR')..')'
 status  = '\n☑️┇ تم تنزيله من المطورين'
 texts = usertext..status
@@ -1185,7 +1185,7 @@ send(msg.chat_id_, msg.id_,'🔖┇ لا تستطيع استخدام البوت 
 end
 return false
 end
-database:BKem(bot_id..'Sudo:User', userid)
+database:srem(bot_id..'Sudo:User', userid)
 tdcli_function ({ID = "GetUser",user_id_ = userid},function(arg,data) 
 if data.first_name_ then
 usertext = '\n📤┇ العضو » ['..data.first_name_..'](t.me/'..(data.username_ or 'SARUR')..')'
@@ -2002,7 +2002,7 @@ if not database:sismember(bot_id..'Chek:Groups',msg.chat_id_) then
 send(msg.chat_id_, msg.id_,'܁༯┆تم تعطيل المجموعةه مسبقاً 💕 ܰ')
 else
 sendText(msg.chat_id_,'\n܁༯┆ههلو حياتي 💕 ܰ \n܁༯┆تم تعطيل المجموعة بنجاح 💕 ܰ',msg.id_/2097152/0.5,'md')
-database:BKem(bot_id..'Chek:Groups',msg.chat_id_)  
+database:srem(bot_id..'Chek:Groups',msg.chat_id_)  
 local Name = '['..result.first_name_..'](tg://user?id='..result.id_..')'
 local NameChat = chat.title_
 local IdChat = msg.chat_id_
@@ -2415,7 +2415,7 @@ send(msg.chat_id_, msg.id_,'܁༯┆ههلو حياتي 💕 ܰ \n܁༯┆تم �
 end,nil)   
 elseif text == 'فتح التثبيت' and msg.reply_to_message_id_ == 0 and Constructor(msg) then 
 database:del(bot_id.."lockpin"..msg.chat_id_)  
-database:BKem(bot_id..'lock:pin',msg.chat_id_)
+database:srem(bot_id..'lock:pin',msg.chat_id_)
 tdcli_function ({ID = "GetUser",user_id_ = msg.sender_user_id_},function(arg,data) 
 send(msg.chat_id_, msg.id_,'┐ هلو بيك حياتي 💕 ٭\n♡ تم فتح التثبيت 💕 ٭\n┘ بواسطة ゠◞ *@'..data.username_..'* ◜  ✛ ٭')  
 end,nil)   
@@ -3186,8 +3186,8 @@ usertext = '\n܁༯┆هلو حياتي 💕 ܰ'
 status  = '\n܁༯┆تم الغاء ܊ الحظر ٭ الكتم ܊ عام من المجموعات 💕 ܰ'
 send(msg.chat_id_, msg.id_, usertext..status)
 end,nil)
-database:BKem(bot_id..'GBan:User', result.sender_user_id_)
-database:BKem(bot_id..'Gmute:User', result.sender_user_id_)
+database:srem(bot_id..'GBan:User', result.sender_user_id_)
+database:srem(bot_id..'Gmute:User', result.sender_user_id_)
 end
 tdcli_function ({ID = "GetMessage",chat_id_ = msg.chat_id_,message_id_ = tonumber(msg.reply_to_message_id_)}, start_function, nil)
 return false
@@ -3208,8 +3208,8 @@ if result.id_ then
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ'
 status  = '\n܁༯┆تم الغاء ܊ الحظر ٭ الكتم ܊ عام من المجموعات 💕 ܰ'
 texts = usertext..status
-database:BKem(bot_id..'GBan:User', result.id_)
-database:BKem(bot_id..'Gmute:User', result.id_)
+database:srem(bot_id..'GBan:User', result.id_)
+database:srem(bot_id..'Gmute:User', result.id_)
 else
 texts = '܁༯┆لايوجد حساب بهذا المعرف  💕 ܰ'
 end
@@ -3229,8 +3229,8 @@ send(msg.chat_id_, msg.id_,'• اهلا بك عزيزي 🔱 •\n• لايم�
 end
 return false
 end
-database:BKem(bot_id..'GBan:User', userid)
-database:BKem(bot_id..'Gmute:User', userid)
+database:srem(bot_id..'GBan:User', userid)
+database:srem(bot_id..'Gmute:User', userid)
 tdcli_function ({ID = "GetUser",user_id_ = userid},function(arg,data) 
 if data.first_name_ then
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ'
@@ -3349,7 +3349,7 @@ end
 return false
 end
 function start_function(extra, result, success)
-database:BKem(bot_id..'Sudo:User', result.sender_user_id_)
+database:srem(bot_id..'Sudo:User', result.sender_user_id_)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ'
 status  = '\n܁༯┆تم تنزيل العضو ◃ مطور💕 ܰ'
@@ -3372,7 +3372,7 @@ return false
 end
 function start_function(extra, result, success)
 if result.id_ then
-database:BKem(bot_id..'Sudo:User', result.id_)
+database:srem(bot_id..'Sudo:User', result.id_)
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ'
 status  = '\n܁༯┆تم تنزيل العضو ◃ مطور💕 ܰ'
 texts = usertext..status
@@ -3395,7 +3395,7 @@ send(msg.chat_id_, msg.id_,'• اهلا بك عزيزي 🔱 •\n• لايم�
 end
 return false
 end
-database:BKem(bot_id..'Sudo:User', userid)
+database:srem(bot_id..'Sudo:User', userid)
 tdcli_function ({ID = "GetUser",user_id_ = userid},function(arg,data) 
 if data.first_name_ then
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ'
@@ -3517,7 +3517,7 @@ end
 return false
 end
 function start_function(extra, result, success)
-database:BKem(bot_id..'Basic:Constructor'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Basic:Constructor'..msg.chat_id_, result.sender_user_id_)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ '
 status  = '\n܁༯┆تم تنزيل العضو ◃ منشى اساسي 💕 ܰ'
@@ -3540,7 +3540,7 @@ return false
 end
 function start_function(extra, result, success)
 if result.id_ then
-database:BKem(bot_id..'Basic:Constructor'..msg.chat_id_, result.id_)
+database:srem(bot_id..'Basic:Constructor'..msg.chat_id_, result.id_)
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ '
 status  = '\n܁༯┆تم تنزيل العضو ◃ منشى اساسي 💕 ܰ'
 texts = usertext..status
@@ -3563,7 +3563,7 @@ send(msg.chat_id_, msg.id_,'• اهلا بك عزيزي 🔱 •\n• لايم�
 end
 return false
 end
-database:BKem(bot_id..'Basic:Constructor'..msg.chat_id_, userid)
+database:srem(bot_id..'Basic:Constructor'..msg.chat_id_, userid)
 tdcli_function ({ID = "GetUser",user_id_ = userid},function(arg,data) 
 if data.first_name_ then
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ '
@@ -3699,7 +3699,7 @@ end
 return false
 end
 function start_function(extra, result, success)
-database:BKem(bot_id..'Constructor'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Constructor'..msg.chat_id_, result.sender_user_id_)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ '
 status  = '\n܁༯┆تم تنزيل العضو من المنشئين 💕 ܰ'
@@ -3722,7 +3722,7 @@ return false
 end
 function start_function(extra, result, success)
 if result.id_ then
-database:BKem(bot_id..'Constructor'..msg.chat_id_, result.id_)
+database:srem(bot_id..'Constructor'..msg.chat_id_, result.id_)
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ '
 status  = '\n܁༯┆تم تنزيل العضو من المنشئين 💕 ܰ'
 texts = usertext..status
@@ -3745,7 +3745,7 @@ send(msg.chat_id_, msg.id_,'• اهلا بك عزيزي 🔱 •\n• لايم�
 end
 return false
 end
-database:BKem(bot_id..'Constructor'..msg.chat_id_, userid)
+database:srem(bot_id..'Constructor'..msg.chat_id_, userid)
 tdcli_function ({ID = "GetUser",user_id_ = userid},function(arg,data) 
 if data.first_name_ then
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ '
@@ -3864,7 +3864,7 @@ end
 return false
 end
 function start_function(extra, result, success)
-database:BKem(bot_id..'Manager'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Manager'..msg.chat_id_, result.sender_user_id_)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ '
 status  = '\n܁༯┆تم تنزيل العضو من المدراء 💕 ܰ'
@@ -3887,7 +3887,7 @@ return false
 end
 function start_function(extra, result, success)
 if result.id_ then
-database:BKem(bot_id..'Manager'..msg.chat_id_, result.id_)
+database:srem(bot_id..'Manager'..msg.chat_id_, result.id_)
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ '
 status  = '\n܁༯┆تم تنزيل العضو من المدراء 💕 ܰ'
 texts = usertext..status
@@ -3910,7 +3910,7 @@ send(msg.chat_id_, msg.id_,'• اهلا بك عزيزي 🔱 •\n• لايم�
 end
 return false
 end
-database:BKem(bot_id..'Manager'..msg.chat_id_, userid)
+database:srem(bot_id..'Manager'..msg.chat_id_, userid)
 tdcli_function ({ID = "GetUser",user_id_ = userid},function(arg,data) 
 if data.first_name_ then
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ '
@@ -3936,11 +3936,11 @@ tdcli_function ({ID = "GetUser",user_id_ = admins[i].user_id_},function(arg,b)
 if b.username_ == true then
 end
 if b.first_name_ == false then
-database:BKem(bot_id.."Mod:User"..msg.chat_id_, admins[i].user_id_)
+database:srem(bot_id.."Mod:User"..msg.chat_id_, admins[i].user_id_)
 end
 end,nil)   
 else
-database:BKem(bot_id.."Mod:User"..msg.chat_id_, admins[i].user_id_)
+database:srem(bot_id.."Mod:User"..msg.chat_id_, admins[i].user_id_)
 end
 end
 if num2 == 0 then
@@ -4081,7 +4081,7 @@ end
 return false
 end
 function start_function(extra, result, success)
-database:BKem(bot_id..'Mod:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Mod:User'..msg.chat_id_, result.sender_user_id_)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ '
 status  = '\n܁༯┆تم تنزيل العضو من الادمنية 💕 ܰ'
@@ -4104,7 +4104,7 @@ return false
 end
 function start_function(extra, result, success)
 if result.id_ then
-database:BKem(bot_id..'Mod:User'..msg.chat_id_, result.id_)
+database:srem(bot_id..'Mod:User'..msg.chat_id_, result.id_)
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ '
 status  = '\n܁༯┆تم تنزيل العضو من الادمنية 💕 ܰ'
 texts = usertext..status
@@ -4127,7 +4127,7 @@ send(msg.chat_id_, msg.id_,'• اهلا بك عزيزي 🔱 •\n• لايم�
 end
 return false
 end
-database:BKem(bot_id..'Mod:User'..msg.chat_id_, userid)
+database:srem(bot_id..'Mod:User'..msg.chat_id_, userid)
 tdcli_function ({ID = "GetUser",user_id_ = userid},function(arg,data) 
 if data.first_name_ then
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ '
@@ -4402,7 +4402,7 @@ end
 return false
 end
 function start_function(extra, result, success)
-database:BKem(bot_id..'Special:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Special:User'..msg.chat_id_, result.sender_user_id_)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ '
 status  = '\n܁༯┆تم تنزيل العضو من المميزين 💕 ܰ'
@@ -4425,7 +4425,7 @@ return false
 end
 function start_function(extra, result, success)
 if result.id_ then
-database:BKem(bot_id..'Special:User'..msg.chat_id_, result.id_)
+database:srem(bot_id..'Special:User'..msg.chat_id_, result.id_)
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ '
 status  = '\n܁༯┆تم تنزيل العضو من المميزين 💕 ܰ'
 texts = usertext..status
@@ -4448,7 +4448,7 @@ send(msg.chat_id_, msg.id_,'• اهلا بك عزيزي 🔱 •\n• لايم�
 end
 return false
 end
-database:BKem(bot_id..'Special:User'..msg.chat_id_, userid)
+database:srem(bot_id..'Special:User'..msg.chat_id_, userid)
 tdcli_function ({ID = "GetUser",user_id_ = userid},function(arg,data) 
 if data.first_name_ then
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ '
@@ -4629,7 +4629,7 @@ if tonumber(result.sender_user_id_) == tonumber(bot_id) then
 send(msg.chat_id_, msg.id_, '☑️┇ انا لست محظورا \n') 
 return false 
 end
-database:BKem(bot_id..'Ban:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Ban:User'..msg.chat_id_, result.sender_user_id_)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n👤┇ العضو » ['..data.first_name_..'](t.me/'..(data.username_ or 'SARUR')..')'
 status  = '\n📮┇ الايدي » `'..result.sender_user_id_..'`\n☑️┇ تم الغاء حظره من هنا'
@@ -4658,7 +4658,7 @@ if tonumber(result.id_) == tonumber(bot_id) then
 send(msg.chat_id_, msg.id_, '☑️┇ انا لست محظورا \n') 
 return false 
 end
-database:BKem(bot_id..'Ban:User'..msg.chat_id_, result.id_)
+database:srem(bot_id..'Ban:User'..msg.chat_id_, result.id_)
 tdcli_function ({ ID = "ChangeChatMemberStatus", chat_id_ = msg.chat_id_, user_id_ = result.id_, status_ = { ID = "ChatMemberStatusLeft" },},function(arg,ban) end,nil)   
 usertext = '\n👤┇ العضو » ['..result.title_..'](t.me/'..(username or 'SARUR')..')'
 status  = '\n☑️┇ تم الغاء حظره من هنا'
@@ -4687,7 +4687,7 @@ if tonumber(userid) == tonumber(bot_id) then
 send(msg.chat_id_, msg.id_, '☑️┇ انا لست محظورا \n') 
 return false 
 end
-database:BKem(bot_id..'Ban:User'..msg.chat_id_, userid)
+database:srem(bot_id..'Ban:User'..msg.chat_id_, userid)
 tdcli_function ({ ID = "ChangeChatMemberStatus", chat_id_ = msg.chat_id_, user_id_ = userid, status_ = { ID = "ChatMemberStatusLeft" },},function(arg,ban) end,nil)   
 tdcli_function ({ID = "GetUser",user_id_ = userid},function(arg,data) 
 if data.first_name_ then
@@ -4915,7 +4915,7 @@ end
 return false
 end
 function start_function(extra, result, success)
-database:BKem(bot_id..'Muted:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Muted:User'..msg.chat_id_, result.sender_user_id_)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ'
 status  = '\n܁༯┆تم الغاء كتم العضو هنا 💕 ܰ'
@@ -4938,7 +4938,7 @@ return false
 end
 function start_function(extra, result, success)
 if result.id_ then
-database:BKem(bot_id..'Muted:User'..msg.chat_id_, result.id_)
+database:srem(bot_id..'Muted:User'..msg.chat_id_, result.id_)
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ'
 status  = '\n܁༯┆تم الغاء كتم العضو هنا 💕 ܰ'
 texts = usertext..status
@@ -4962,7 +4962,7 @@ send(msg.chat_id_, msg.id_,'• اهلا بك عزيزي 🔱 •\n• لايم�
 end
 return false
 end
-database:BKem(bot_id..'Muted:User'..msg.chat_id_, userid)
+database:srem(bot_id..'Muted:User'..msg.chat_id_, userid)
 tdcli_function ({ID = "GetUser",user_id_ = userid},function(arg,data) 
 if data.first_name_ then
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ'
@@ -5236,17 +5236,17 @@ end
 function start_function(extra, result, success)
 if result.id_ then
 if SudoBot(msg) then
-database:BKem(bot_id..'GBan:User',result.id_)
-database:BKem(bot_id..'Ban:User'..msg.chat_id_,result.id_)
-database:BKem(bot_id..'Muted:User'..msg.chat_id_,result.id_)
-database:BKem(bot_id..'Gmute:User'..msg.chat_id_,result.id_)
+database:srem(bot_id..'GBan:User',result.id_)
+database:srem(bot_id..'Ban:User'..msg.chat_id_,result.id_)
+database:srem(bot_id..'Muted:User'..msg.chat_id_,result.id_)
+database:srem(bot_id..'Gmute:User'..msg.chat_id_,result.id_)
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ '
 status  = '\n܁༯┆تم الغاء جميع القيود من العضو 💕 ܰ '
 texts = usertext..status
 send(msg.chat_id_, msg.id_,texts)
 else
-database:BKem(bot_id..'Ban:User'..msg.chat_id_,result.id_)
-database:BKem(bot_id..'Muted:User'..msg.chat_id_,result.id_)
+database:srem(bot_id..'Ban:User'..msg.chat_id_,result.id_)
+database:srem(bot_id..'Muted:User'..msg.chat_id_,result.id_)
 usertext = '\n܁༯┆ههلو حياتي 💕 ܰ'
 status  = '\n܁༯┆تم الغاء تقيد العضو  💕 ܰ' 
 texts = usertext..status
@@ -5271,17 +5271,17 @@ return false
 end
 function start_function(extra, result, success)
 if SudoBot(msg) then
-database:BKem(bot_id..'GBan:User',result.sender_user_id_)
-database:BKem(bot_id..'Ban:User'..msg.chat_id_,result.sender_user_id_)
-database:BKem(bot_id..'Muted:User'..msg.chat_id_,result.sender_user_id_)
+database:srem(bot_id..'GBan:User',result.sender_user_id_)
+database:srem(bot_id..'Ban:User'..msg.chat_id_,result.sender_user_id_)
+database:srem(bot_id..'Muted:User'..msg.chat_id_,result.sender_user_id_)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ '
 status  = '\n܁༯┆تم الغاء جميع القيود من العضو 💕 ܰ '
 send(msg.chat_id_, msg.id_, usertext..status)
 end,nil)
 else
-database:BKem(bot_id..'Ban:User'..msg.chat_id_,result.sender_user_id_)
-database:BKem(bot_id..'Muted:User'..msg.chat_id_,result.sender_user_id_)
+database:srem(bot_id..'Ban:User'..msg.chat_id_,result.sender_user_id_)
+database:srem(bot_id..'Muted:User'..msg.chat_id_,result.sender_user_id_)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n܁༯┆هلو حياتي 💕 ܰ '
 status  = '\n܁༯┆تم الغاء جميع القيود من العضو 💕 ܰ '
@@ -6036,7 +6036,7 @@ end
 return false
 end
 function start_function(extra, result, success)
-database:BKem(bot_id..'Mote:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Mote:User'..msg.chat_id_, result.sender_user_id_)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n܁༯┆تم تنزيل العضو مطي في المجموعة 😭😹💕 ܰ'
 status  = ''
@@ -6097,7 +6097,7 @@ end
 return false
 end
 function start_function(extra, result, success)
-database:BKem(bot_id..'Athol:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Athol:User'..msg.chat_id_, result.sender_user_id_)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n܁༯┆تم تنزيل العضو اثول في المجموعة 😭😹💕 ܰ'
 status  = ''
@@ -6158,7 +6158,7 @@ end
 return false
 end
 function start_function(extra, result, success)
-database:BKem(bot_id..'Naby:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Naby:User'..msg.chat_id_, result.sender_user_id_)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n܁༯┆متستاهل النبوه نزلتك 😹😭💕 ܰ'
 status  = ''
@@ -6219,7 +6219,7 @@ end
 return false
 end
 function start_function(extra, result, success)
-database:BKem(bot_id..'Glb:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Glb:User'..msg.chat_id_, result.sender_user_id_)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n܁༯┆تم تنزيل العضو جلب في المجموعة 😭😹💕 ܰ'
 status  = ''
@@ -6280,7 +6280,7 @@ end
 return false
 end
 function start_function(extra, result, success)
-database:BKem(bot_id..'Zgal:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Zgal:User'..msg.chat_id_, result.sender_user_id_)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n܁༯┆تم تنزيل العضو صخل في المجموعة 😭😹💕 ܰ'
 status  = ''
@@ -6341,7 +6341,7 @@ end
 return false
 end
 function start_function(extra, result, success)
-database:BKem(bot_id..'Zahf:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Zahf:User'..msg.chat_id_, result.sender_user_id_)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n܁༯┆تم تنزيل العضو زاحف في المجموعة 😭😹💕 ܰ'
 status  = ''
@@ -6402,7 +6402,7 @@ end
 return false
 end
 function start_function(extra, result, success)
-database:BKem(bot_id..'Galby:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Galby:User'..msg.chat_id_, result.sender_user_id_)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n܁༯┆مو كتلك لتجرحني نزلتك من كلبي 😭💕 ܰ'
 status  = ''
@@ -6463,7 +6463,7 @@ end
 return false
 end
 function start_function(extra, result, success)
-database:BKem(bot_id..'Tag:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Tag:User'..msg.chat_id_, result.sender_user_id_)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n܁༯┆التاج ماينزل من مكانه 🤴🏻💕 ܰ'
 status  = ''
@@ -6680,7 +6680,7 @@ if test and test == "reppp" then
 send(msg.chat_id_, msg.id_,"܁༯┆تم الغاء منع الكلمةه 💕 ܰ  ")  
 database:del(bot_id.."SARUR1:Add:Filter:Rp1"..msg.sender_user_id_..msg.chat_id_)  
 database:del(bot_id.."SARUR1:Add:Filter:Rp2"..text..msg.chat_id_)  
-database:BKem(bot_id.."SARUR1:List:Filter"..msg.chat_id_,text)  
+database:srem(bot_id.."SARUR1:List:Filter"..msg.chat_id_,text)  
 return false  end  
 end
 
@@ -6717,21 +6717,21 @@ function cb(a,b,c)
 textt = '܁༯┆تم الغاء المنع 💕 ܰ  '
 if b.content_.sticker_ then
 local idsticker = b.content_.sticker_.set_id_
-database:BKem(bot_id.."filtersteckr"..msg.chat_id_,idsticker)
+database:srem(bot_id.."filtersteckr"..msg.chat_id_,idsticker)
 text = 'الملصق'
 send(msg.chat_id_, msg.id_,textt..'( '..text..' ) بنجاح يمكنهم الارسال الان')  
 return false
 end
 if b.content_.ID == "MessagePhoto" then
 local photo = b.content_.photo_.id_
-database:BKem(bot_id.."filterphoto"..msg.chat_id_,photo)
+database:srem(bot_id.."filterphoto"..msg.chat_id_,photo)
 text = 'الصوره'
 send(msg.chat_id_, msg.id_,textt..'( '..text..' ) بنجاح يمكنهم الارسال الان')  
 return false
 end
 if b.content_.animation_.animation_ then
 local idanimation = b.content_.animation_.animation_.persistent_id_
-database:BKem(bot_id.."filteranimation"..msg.chat_id_,idanimation)
+database:srem(bot_id.."filteranimation"..msg.chat_id_,idanimation)
 text = 'المتحركه'
 send(msg.chat_id_, msg.id_,textt..'( '..text..' ) بنجاح يمكنهم الارسال الان')  
 return false
@@ -6745,7 +6745,7 @@ local list = database:smembers(bot_id.."SARUR1:List:Filter"..msg.chat_id_)
 for k,v in pairs(list) do  
 database:del(bot_id.."SARUR1:Add:Filter:Rp1"..msg.sender_user_id_..msg.chat_id_)  
 database:del(bot_id.."SARUR1:Add:Filter:Rp2"..v..msg.chat_id_)  
-database:BKem(bot_id.."SARUR1:List:Filter"..msg.chat_id_,v)  
+database:srem(bot_id.."SARUR1:List:Filter"..msg.chat_id_,v)  
 end  
 send(msg.chat_id_, msg.id_,"܁༯┆تم مسح قائمة المنع💕 ܰ ")  
 end
@@ -7187,15 +7187,15 @@ tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,
 local blakrt = database:get(bot_id.."Comd:New:rt:bot:"..RTPA..msg.chat_id_)
 if blakrt == 'مميز' and Mod(msg) then
 send(msg.chat_id_, msg.id_,'\n܁༯┆ههلو حياتي 💕 ܰ ['..data.first_name_..'](t.me/'..(data.username_ or 'SARUR')..')'..'\n☑️┇ تم تنزيله من '..RTPA..' هنا\n')   
-database:BKem(bot_id..'Special:User'..msg.chat_id_,result.sender_user_id_)  
+database:srem(bot_id..'Special:User'..msg.chat_id_,result.sender_user_id_)  
 database:del(bot_id.."Comd:New:rt:user:"..msg.chat_id_..result.sender_user_id_)
 elseif blakrt == 'ادمن' and Manager(msg) then 
 send(msg.chat_id_, msg.id_,'\n܁༯┆ههلو حياتي 💕 ܰ ['..data.first_name_..'](t.me/'..(data.username_ or 'SARUR')..')'..'\n☑️┇ تم تنزيله من '..RTPA..' هنا\n')   
-database:BKem(bot_id..'Mod:User'..msg.chat_id_,result.sender_user_id_) 
+database:srem(bot_id..'Mod:User'..msg.chat_id_,result.sender_user_id_) 
 database:del(bot_id.."Comd:New:rt:user:"..msg.chat_id_..result.sender_user_id_)
 elseif blakrt == 'مدير' and Constructor(msg) then
 send(msg.chat_id_, msg.id_,'\n܁༯┆ههلو حياتي 💕 ܰ ['..data.first_name_..'](t.me/'..(data.username_ or 'SARUR')..')'..'\n☑️┇ تم تنزيله من '..RTPA..' هنا\n')   
-database:BKem(bot_id..'Manager'..msg.chat_id_,result.sender_user_id_)  
+database:srem(bot_id..'Manager'..msg.chat_id_,result.sender_user_id_)  
 database:del(bot_id.."Comd:New:rt:user:"..msg.chat_id_..result.sender_user_id_)
 elseif blakrt == 'عضو' and Mod(msg) then
 send(msg.chat_id_, msg.id_,'\n܁༯┆ههلو حياتي 💕 ܰ ['..data.first_name_..'](t.me/'..(data.username_ or 'SARUR')..')'..'\n☑️┇ تم تنزيله من '..RTPA..' هنا\n')   
@@ -7260,15 +7260,15 @@ if result.id_ then
 local blakrt = database:get(bot_id.."Comd:New:rt:bot:"..text1[2]..msg.chat_id_)
 if blakrt == 'مميز' and Mod(msg) then
 send(msg.chat_id_, msg.id_,'\n܁༯┆ههلو حياتي 💕 ܰ ['..result.title_..'](t.me/'..(text1[3] or 'SARUR')..')'..'\n☑️┇ تم تنريله من '..text1[2]..' هنا')   
-database:BKem(bot_id..'Special:User'..msg.chat_id_,result.id_)  
+database:srem(bot_id..'Special:User'..msg.chat_id_,result.id_)  
 database:del(bot_id.."Comd:New:rt:user:"..msg.chat_id_..result.id_)
 elseif blakrt == 'ادمن' and Manager(msg) then 
 send(msg.chat_id_, msg.id_,'\n܁༯┆ههلو حياتي 💕 ܰ ['..result.title_..'](t.me/'..(text1[3] or 'SARUR')..')'..'\n☑️┇ تم تنريله من '..text1[2]..' هنا')   
-database:BKem(bot_id..'Mod:User'..msg.chat_id_,result.id_)  
+database:srem(bot_id..'Mod:User'..msg.chat_id_,result.id_)  
 database:del(bot_id.."Comd:New:rt:user:"..msg.chat_id_..result.id_)
 elseif blakrt == 'مدير' and Constructor(msg) then
 send(msg.chat_id_, msg.id_,'\n܁༯┆ههلو حياتي 💕 ܰ ['..result.title_..'](t.me/'..(text1[3] or 'SARUR')..')'..'\n☑️┇ تم تنريله من '..text1[2]..' هنا')   
-database:BKem(bot_id..'Manager'..msg.chat_id_,result.id_)  
+database:srem(bot_id..'Manager'..msg.chat_id_,result.id_)  
 database:del(bot_id.."Comd:New:rt:user:"..msg.chat_id_..result.id_)
 elseif blakrt == 'عضو' and Mod(msg) then
 send(msg.chat_id_, msg.id_,'\n܁༯┆ههلو حياتي 💕 ܰ ['..result.title_..'](t.me/'..(text1[3] or 'SARUR')..')'..'\n☑️┇ تم تنريله من '..text1[2]..' هنا')   
@@ -7572,30 +7572,30 @@ else
 send(msg.chat_id_, msg.id_,"\n܁༯┆ليس لديةه رتب حتئ استطيع تنزيل 😹😭💕 ܰ  \n")
 end
 if tonumber(SUDO) == tonumber(msg.sender_user_id_) then
-database:BKem(bot_id..'Sudo:User', result.sender_user_id_)
-database:BKem(bot_id..'Basic:Constructor'..msg.chat_id_,result.sender_user_id_)
-database:BKem(bot_id..'Constructor'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Manager'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Mod:User'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Special:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Sudo:User', result.sender_user_id_)
+database:srem(bot_id..'Basic:Constructor'..msg.chat_id_,result.sender_user_id_)
+database:srem(bot_id..'Constructor'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Manager'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Mod:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Special:User'..msg.chat_id_, result.sender_user_id_)
 elseif database:sismember(bot_id..'Sudo:User',msg.sender_user_id_) then
-database:BKem(bot_id..'Mod:User'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Special:User'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Manager'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Constructor'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Basic:Constructor'..msg.chat_id_,result.sender_user_id_)
+database:srem(bot_id..'Mod:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Special:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Manager'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Constructor'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Basic:Constructor'..msg.chat_id_,result.sender_user_id_)
 elseif database:sismember(bot_id..'Basic:Constructor'..msg.chat_id_, msg.sender_user_id_) then
-database:BKem(bot_id..'Mod:User'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Special:User'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Manager'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Constructor'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Mod:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Special:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Manager'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Constructor'..msg.chat_id_, result.sender_user_id_)
 elseif database:sismember(bot_id..'Constructor'..msg.chat_id_, msg.sender_user_id_) then
-database:BKem(bot_id..'Mod:User'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Special:User'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Manager'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Mod:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Special:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Manager'..msg.chat_id_, result.sender_user_id_)
 elseif database:sismember(bot_id..'Manager'..msg.chat_id_, msg.sender_user_id_) then
-database:BKem(bot_id..'Mod:User'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Special:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Mod:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Special:User'..msg.chat_id_, result.sender_user_id_)
 end
 end
 tdcli_function ({ID = "GetMessage",chat_id_ = msg.chat_id_,message_id_ = tonumber(msg.reply_to_message_id_)}, start_function, nil)
@@ -7636,30 +7636,30 @@ else
 send(msg.chat_id_, msg.id_,"\n܁༯┆ليس لديةه رتب حتئ استطيع تنزيل 😹😭💕 ܰ  \n")
 end
 if tonumber(SUDO) == tonumber(msg.sender_user_id_) then
-database:BKem(bot_id..'Sudo:User', result.sender_user_id_)
-database:BKem(bot_id..'Basic:Constructor'..msg.chat_id_,result.sender_user_id_)
-database:BKem(bot_id..'Constructor'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Manager'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Mod:User'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Special:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Sudo:User', result.sender_user_id_)
+database:srem(bot_id..'Basic:Constructor'..msg.chat_id_,result.sender_user_id_)
+database:srem(bot_id..'Constructor'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Manager'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Mod:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Special:User'..msg.chat_id_, result.sender_user_id_)
 elseif database:sismember(bot_id..'Sudo:User',msg.sender_user_id_) then
-database:BKem(bot_id..'Mod:User'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Special:User'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Manager'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Constructor'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Basic:Constructor'..msg.chat_id_,result.sender_user_id_)
+database:srem(bot_id..'Mod:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Special:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Manager'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Constructor'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Basic:Constructor'..msg.chat_id_,result.sender_user_id_)
 elseif database:sismember(bot_id..'Basic:Constructor'..msg.chat_id_, msg.sender_user_id_) then
-database:BKem(bot_id..'Mod:User'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Special:User'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Manager'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Constructor'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Mod:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Special:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Manager'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Constructor'..msg.chat_id_, result.sender_user_id_)
 elseif database:sismember(bot_id..'Constructor'..msg.chat_id_, msg.sender_user_id_) then
-database:BKem(bot_id..'Mod:User'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Special:User'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Manager'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Mod:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Special:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Manager'..msg.chat_id_, result.sender_user_id_)
 elseif database:sismember(bot_id..'Manager'..msg.chat_id_, msg.sender_user_id_) then
-database:BKem(bot_id..'Mod:User'..msg.chat_id_, result.sender_user_id_)
-database:BKem(bot_id..'Special:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Mod:User'..msg.chat_id_, result.sender_user_id_)
+database:srem(bot_id..'Special:User'..msg.chat_id_, result.sender_user_id_)
 end
 end
 tdcli_function ({ID = "GetMessage",chat_id_ = msg.chat_id_,message_id_ = tonumber(msg.reply_to_message_id_)}, start_function, nil)
@@ -7773,7 +7773,7 @@ for k,v in pairs(list) do
 database:del(bot_id..v..text)
 end
 database:del(bot_id..'Set:On'..msg.sender_user_id_..':'..msg.chat_id_)
-database:BKem(bot_id..'List:Rd:Sudo', text)
+database:srem(bot_id..'List:Rd:Sudo', text)
 return false
 end
 end
@@ -7971,7 +7971,7 @@ database:del(bot_id.."Add:Rd:Manager:Video"..text..msg.chat_id_)
 database:del(bot_id.."Add:Rd:Manager:File"..text..msg.chat_id_)
 database:del(bot_id.."Add:Rd:Manager:Audio"..text..msg.chat_id_)
 database:del(bot_id..'Set:Manager:rd'..msg.sender_user_id_..':'..msg.chat_id_)
-database:BKem(bot_id..'List:Manager'..msg.chat_id_..'', text)
+database:srem(bot_id..'List:Manager'..msg.chat_id_..'', text)
 return false
 end
 end
@@ -8054,7 +8054,7 @@ if text == ""..(database:get(bot_id..'Name:Bot') or 'سرور').." غادر" or 
 if Sudo(msg) and not database:get(bot_id..'Left:Bot'..msg.chat_id_)  then 
 tdcli_function ({ID = "ChangeChatMemberStatus",chat_id_=msg.chat_id_,user_id_=bot_id,status_={ID = "ChatMemberStatusLeft"},},function(e,g) end, nil) 
 send(msg.chat_id_, msg.id_,'܁༯┆باي راح اشتاقلكم 😭💕 ܰ ') 
-database:BKem(bot_id..'Chek:Groups',msg.chat_id_)  
+database:srem(bot_id..'Chek:Groups',msg.chat_id_)  
 end
 return false  
 end
@@ -8566,7 +8566,7 @@ get_id_text = get_id_text:gsub('#stast',rtp)
 get_id_text = get_id_text:gsub('#auto',interaction) 
 get_id_text = get_id_text:gsub('#game',NUMPGAME) 
 get_id_text = get_id_text:gsub('#photos',photps) 
-if result.status_.ID == "UserStatuBKecently" and result.profile_photo_ ~= false then   
+if result.status_.ID == "UserStatusRecently" and result.profile_photo_ ~= false then   
 sendPhoto(msg.chat_id_, msg.id_, 0, 1, nil, taha.photos_[0].sizes_[1].photo_.persistent_id_,get_id_text)       
 else 
 if result.status_.ID == "UserStatusEmpty" and result.profile_photo_ == false then
@@ -8581,7 +8581,7 @@ username = '@'..result.username_
 else
 username = 'لا يوجد '
 end
-if result.status_.ID == "UserStatuBKecently" and result.profile_photo_ ~= false then
+if result.status_.ID == "UserStatusRecently" and result.profile_photo_ ~= false then
 sendPhoto(msg.chat_id_, msg.id_, 0, 1, nil, taha.photos_[0].sizes_[1].photo_.persistent_id_,'\n˹ 𖢊 𝑈𝑠𝑒𝑅 𖡻 '..username..' ま .\n˹ 𖢊 𝑖𝐷 𖡻 '..msg.sender_user_id_..' ま .\n˹ 𖢊 𝑆𝑡𝑎𝑆 𖡻 '..Rutba(msg.sender_user_id_,msg.chat_id_)..' ま .\n˹ 𖢊 𝐴𝑢𝑡𝑂 𖡻 '..Total_Msg(Msguser)..' ま .\n˹ 𖢊 𝑀𝑎𝑠𝐺 𖡻 '..Msguser..' ま .\n˹ 𖢊 𝐸𝑑𝑖𝑇 𖡻 '..edit..' ま .\n˹ 𖢊 𝐺𝑎𝑚𝐸 𖡻 '..NUMPGAME..' ま .\n')   
 else 
 if result.status_.ID == "UserStatusEmpty" and result.profile_photo_ == false then
@@ -8667,7 +8667,7 @@ chat_id_ = pv[i], action_ = {  ID = "SendMessageTypingAction", progress_ = 100}
 },function(arg,data) 
 if data.ID and data.ID == "Ok"  then
 else
-database:BKem(bot_id.."User_Bot",pv[i])
+database:srem(bot_id.."User_Bot",pv[i])
 sendok = sendok + 1
 end
 if #pv == i then 
@@ -8700,20 +8700,20 @@ for i = 1, #group do
 tdcli_function({ID='GetChat',chat_id_ = group[i]
 },function(arg,data)
 if data and data.type_ and data.type_.channel_ and data.type_.channel_.status_ and data.type_.channel_.status_.ID == "ChatMemberStatusMember" then
-database:BKem(bot_id..'Chek:Groups',group[i])  
+database:srem(bot_id..'Chek:Groups',group[i])  
 tdcli_function ({ID = "ChangeChatMemberStatus",chat_id_=group[i],user_id_=bot_id,status_={ID = "ChatMemberStatusLeft"},},function(e,g) end, nil) 
 w = w + 1
 end
 if data and data.type_ and data.type_.channel_ and data.type_.channel_.status_ and data.type_.channel_.status_.ID == "ChatMemberStatusLeft" then
-database:BKem(bot_id..'Chek:Groups',group[i])  
+database:srem(bot_id..'Chek:Groups',group[i])  
 q = q + 1
 end
 if data and data.type_ and data.type_.channel_ and data.type_.channel_.status_ and data.type_.channel_.status_.ID == "ChatMemberStatusKicked" then
-database:BKem(bot_id..'Chek:Groups',group[i])  
+database:srem(bot_id..'Chek:Groups',group[i])  
 q = q + 1
 end
 if data and data.code_ and data.code_ == 400 then
-database:BKem(bot_id..'Chek:Groups',group[i])  
+database:srem(bot_id..'Chek:Groups',group[i])  
 w = w + 1
 end
 if #group == i then 
@@ -10320,7 +10320,7 @@ end -- end msg
 function tdcli_update_callback(data)  -- clback
 if data.ID == "UpdateChannel" then 
 if data.channel_.status_.ID == "ChatMemberStatusKicked" then 
-database:BKem(bot_id..'Chek:Groups','-100'..data.channel_.id_)  
+database:srem(bot_id..'Chek:Groups','-100'..data.channel_.id_)  
 tdcli_function({ID ="GetChat",chat_id_=msg.chat_id_},function(arg,chat)  
 local NameChat = chat.title_
 local IdChat = msg.chat_id_
@@ -10356,7 +10356,7 @@ local NewCmmd = database:get(bot_id.."Set:Cmd:Group:New1"..msg.chat_id_..':'..te
 if NewCmmd then
 database:del(bot_id.."Set:Cmd:Group:New1"..msg.chat_id_..':'..text)
 database:del(bot_id.."Set:Cmd:Group:New"..msg.chat_id_)
-database:BKem(bot_id.."List:Cmd:Group:New"..msg.chat_id_,text)
+database:srem(bot_id.."List:Cmd:Group:New"..msg.chat_id_,text)
 send(msg.chat_id_, msg.id_,'܁༯┆تم حذف الامر بنجاح 💕 ܰ')  
 else
 send(msg.chat_id_, msg.id_,'܁༯┆لايوجد امر بهذا الاسم 💕 ܰ')  
@@ -10707,17 +10707,17 @@ for k,v in pairs(list) do
 tdcli_function({ID='GetChat',chat_id_ = v
 },function(arg,data)
 if data and data.type_ and data.type_.channel_ and data.type_.channel_.status_ and data.type_.channel_.status_.ID == "ChatMemberStatusMember" then
-database:BKem(bot_id..'Chek:Groups',v)  
+database:srem(bot_id..'Chek:Groups',v)  
 tdcli_function ({ID = "ChangeChatMemberStatus",chat_id_=v,user_id_=bot_id,status_={ID = "ChatMemberStatusLeft"},},function(e,g) end, nil) 
 end
 if data and data.type_ and data.type_.channel_ and data.type_.channel_.status_ and data.type_.channel_.status_.ID == "ChatMemberStatusLeft" then
-database:BKem(bot_id..'Chek:Groups',v)  
+database:srem(bot_id..'Chek:Groups',v)  
 end
 if data and data.type_ and data.type_.channel_ and data.type_.channel_.status_ and data.type_.channel_.status_.ID == "ChatMemberStatusKicked" then
-database:BKem(bot_id..'Chek:Groups',v)  
+database:srem(bot_id..'Chek:Groups',v)  
 end
 if data and data.code_ and data.code_ == 400 then
-database:BKem(bot_id..'Chek:Groups',v)  
+database:srem(bot_id..'Chek:Groups',v)  
 end
 if data and data.type_ and data.type_.channel_ and data.type_.channel_.status_ and data.type_.channel_.status_.ID == "ChatMemberStatusEditor" then
 database:sadd(bot_id..'Chek:Groups',v)  
