@@ -1,10 +1,10 @@
-#!/uBK/bin/env bash
+#!/usr/bin/env bash
 cd $HOME/SARUR
 install() {
 rm -rf $HOME/.telegram-cli
 sudo apt-get update -y
 sudo apt-get upgrade -y
-sudo apt-get install software-properties-comBKn -y
+sudo apt-get install software-properties-common -y
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
 sudo luarocks install luasocket
 sudo luarocks install luasec
@@ -18,10 +18,10 @@ sudo apt-get install screen -y
 sudo apt-get install libstdc++6 -y
 sudo apt-get install lua-lgi -y
 sudo apt-get install libnotify-dev -y
-sudo chBKd +x tg
+sudo chmod +x tg
 lua SARUR.lua
-sudo chBKd +x SARUR
-sudo chBKd +x ./BK
+sudo chmod +x SARUR
+sudo chmod +x ./BK
 ./BK
 }
 if [ "$1" = "install" ]; then
@@ -31,9 +31,9 @@ if [ ! -f ./tg ]; then
 echo "Tg Is Not Found"
 exit 1
 fi
-sudo chBKd +x tg
+sudo chmod +x tg
 lua SARUR.lua
-sudo chBKd +x SARUR
-sudo chBKd +x ./BK
+sudo chmod +x SARUR
+sudo chmod +x ./BK
 ./BK
 fi
